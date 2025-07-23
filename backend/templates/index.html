@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <title>Sugarcane Detection AI</title>
+  <link rel="icon" href="{{ url_for('static', filename='istockphoto-1307399952-612x612.jpg') }}" type="image/x-icon" />
+</head>
+
+<body>
+  <div class="centrar">
+    <img id="logo_sugarcane" alt="Caña de Azúcar" src="{{ url_for('static', filename='sugarcane_mc.png') }}" />
+  </div>
+
+  <div class="container">
+    <h2>SUBE UNA IMÁGEN DE UNA CAÑA</h2>
+    <p>Holi, soy un programa que analizará si lo que subes es una caña o no !!!</p>
+
+    <div class="row">
+      <input type="file" accept="image/*" id="upload" style="display: none" onchange="updateButtonText()" />
+      <button id="choose-file-btn" onclick="document.getElementById('upload').click();">Elegir archivo</button>
+      <p id="file-status">No se ha seleccionado ningún archivo</p>
+      <button id="analizar-btn" onclick="analizarImagen()" disabled>Analizar</button>
+    </div>
+
+    <img id="preview" src="#" alt="Vista previa" hidden />
+    <textarea id="resultado" placeholder="Aquí aparecerá el resultado..." readonly></textarea>
+
+    <div id="bloque-tablas" hidden>
+      <hr style="margin-bottom: 20px; border: 2px dashed #b5b5b5;">
+      <h2 style="margin-top: 20px;">🎋PREVIEW DE LOS RESULTADOS🎋DETECTADOS</h2>
+
+      <div id="tabla-cana">
+        <h4 style="color: #73a35e;"> a. Cañas Detectadas</h4>
+        <div class="contenedor-imagenes" id="imagenes-cana"></div>
+      </div>
+
+      <div id="tabla-nudo">
+        <h4 style="color: #73a35e;">b. Nudos Detectados</h4>
+        <div class="contenedor-imagenes" id="imagenes-nudo"></div>
+      </div>
+
+      <div id="tabla-entrenudo">
+        <h4 style="color: #73a35e;">c. Entrenudos Detectados</h4>
+        <div class="contenedor-imagenes" id="imagenes-entrenudo"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateButtonText() {
+      const fileInput = document.getElementById("upload");
+      const fileStatus = document.getElementById("file-status");
+      const analizarBtn = document.getElementById("analizar-btn");
+
+      if (fileInput.files.length > 0) {
+        fileStatus.textContent = "Archivo seleccionado: " + fileInput.files[0].name;
+        analizarBtn.disabled = false;
+      } else {
+        fileStatus.textContent = "No se ha seleccionado ningún archivo";
+        analizarBtn.disabled = true;
+      }
+    }
+
+    function analizarImagen() {
+      const fileInput = document.getElementById("upload");
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("imagen", file);
+
+      fetch("http://127.0.0.1:5000/analizar", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const preview = document.getElementById("preview");
+          preview.src = URL.createObjectURL(file);
+          preview.hidden = false;
+
+          if (!data.es_cana) {
+            document.getElementById("resultado").value = `❌ No es una caña.\nProbabilidad: ${data.probabilidad}`;
+            document.getElementById("bloque-tablas").hidden = true;
+          } else {
+            document.getElementById("resultado").value =
+              `✅ ES UNA CAÑA 🌾!!\nProbabilidad: ${data.probabilidad}\nCantidad de cañas: ${data.num_canas}\nCantidad de nudos: ${data.num_nudos}\nCantidad de entrenudos: ${data.num_entrenudos}`;
+
+            mostrarImagenesPorCategoria("cana", data.cana_imgs);
+            mostrarImagenesPorCategoria("nudo", data.nudo_imgs);
+            mostrarImagenesPorCategoria("entrenudo", data.entrenudo_imgs);
+            document.getElementById("bloque-tablas").hidden = false;
+            console.log("Con amor, Campos");
+          }
+        })
+        .catch((error) => {
+          document.getElementById("resultado").value = "Error al analizar la imagen.";
+          console.error(error);
+        });
+    }
+
+    document.getElementById("upload").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const preview = document.getElementById("preview");
+          preview.src = e.target.result;
+          preview.hidden = false;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function mostrarImagenesPorCategoria(tipo, lista) {
+      const contenedor = document.getElementById("imagenes-" + tipo);
+      const tabla = document.getElementById("tabla-" + tipo);
+
+      if (!contenedor || !tabla) return;
+
+      if (!lista || !Array.isArray(lista) || lista.length === 0) {
+        tabla.style.display = "none";
+        return;
+      }
+
+      tabla.style.display = "block";
+      contenedor.innerHTML = "";
+
+      lista.forEach((url) => {
+        const img = document.createElement("img");
+        img.src = url + "?t=" + new Date().getTime();
+        img.classList.add("img-" + tipo);
+        contenedor.appendChild(img);
+      });
+    }
+  </script>
+</body>
+
+</html>

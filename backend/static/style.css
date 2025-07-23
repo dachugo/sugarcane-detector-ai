@@ -1,0 +1,180 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #ffffff;
+}
+
+h2 {
+  user-select: none;
+  font-size: 30px;
+  margin: 15px 0 5px;
+  text-align: center;
+  font-weight: 800;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+button {
+  user-select: none;
+  background: #000000;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  padding: 5px 20px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  border: 2px solid #000000;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #73a35e;
+  border-color: #73a35e;
+  scale: 1.02;
+  transition: all 0.3s ease;
+}
+
+button:disabled {
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+  cursor: not-allowed;
+}
+
+.centrar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo_sugarcane {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+}
+
+#choose-file-btn {
+  background: #000000;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  border: 2px solid #000000;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+#choose-file-btn:hover {
+  background-color: #73a35e;
+  border-color: #73a35e;
+  scale: 1.02;
+  transition: all 0.3s ease;
+}
+
+p {
+  user-select: none;
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #73a35e;
+  font-weight: 600;
+  text-align: center;
+}
+
+#file-status {
+  margin-top: 10px;
+  color: #434343;
+  font-size: 14px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+#preview {
+  margin: 30px 0;
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+textarea {
+  font-size: 15px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  width: 100%;
+  height: 90px;
+  margin-top: 20px;
+  resize: none;
+  text-align: center;
+  padding: 20px 0;
+  border: none;
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  margin-bottom: 2em;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.row button {
+  margin: 5px;
+}
+
+.row p {
+  flex: 1;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .row button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #choose-file-btn {
+    width: 100%;
+  }
+
+  #file-status {
+    margin-top: 10px;
+  }
+}
+
+.contenedor-imagenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px 0;
+}
+
+.contenedor-imagenes img {
+  max-width: 200px;
+  max-height: 200px;
+  width: auto;
+  padding: 10px;
+  height: auto;
+  object-fit: contain;
+  border: 2px solid #bebebe;
+  border-radius: 10px;
+  background: transparent;
+}

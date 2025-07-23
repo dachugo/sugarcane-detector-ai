@@ -1,0 +1,47 @@
+
+  _______ ______  _____ _______   _______ _    _ ______   __  __  ____  _____  ______ _      
+ |__   __|  ____|/ ____|__   __| |__   __| |  | |  ____| |  \/  |/ __ \|  __ \|  ____| |     
+    | |  | |__  | (___    | |       | |  | |__| | |__    | \  / | |  | | |  | | |__  | |     
+    | |  |  __|  \___ \   | |       | |  |  __  |  __|   | |\/| | |  | | |  | |  __| | |     
+    | |  | |____ ____) |  | |       | |  | |  | | |____  | |  | | |__| | |__| | |____| |____ 
+    |_|  |______|_____/   |_|       |_|  |_|  |_|______| |_|  |_|\____/|_____/|______|______|
+                                                                                                                            
+		***Pasos para probar los modelos de TENSORFLOW & YOLO**
+
+============================================================================
+
+|ADVERTENCIA (!): DESCARGAR LAS CARPETAS DE LOS DATASETS EN EL DRIVE|
+
+============================================================================
+
+
+1. MODELO KERAS-TENSORFLOW
+   MODELO POR ENTRENAR -> training_test-keras_over.py
+   RECURSOS OBLIGATORIOS -> /dataset_tf 
+	
+	# Ejecutar 
+		cd ./backend
+		python training_test-keras_over.py
+
+	# Seleccionar el modelo .keras y posicionarlo en una carpeta de models -> /backend/models/modelo_final.keras
+
+
+2. MODELO YOLO
+   MODELO POR ENTRENAR -> training_test-yolo_over.py
+   RECURSOS OBLIGATORIOS -> /dataset
+
+ 	# Ejecutar
+ 		cd ./backend
+ 		python training_test-yolo_over.py
+
+ 	# Te debe generar una carpeta /runs dentro de /backend, esta carpeta última debe tener el archivo best.pt dentro de -> runs/cana_detect/weights/best.pt
+
+
+
+
+
+=================================================================================
+
+
+ (AYUDA) -> Si te dificulta descargar o entrenar los modelos también encontrás los carpetas de /runs y /models dentro del link de Drive
+
