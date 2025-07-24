@@ -34,6 +34,33 @@ This project is an intelligent system for detecting sugarcane in images, as well
 - Intuitive web interface for image upload and result visualization.
 - Visual results: cropped images of each detected object and probability metrics.
 
+## Dataset Preparation & Annotation
+### TensorFlow/Keras Dataset
+- ~2,600 images were used, balanced between “cana” and “no_cana” classes for robust binary classification.
+- Images were split for training and validation to ensure generalization.
+
+### YOLOv8 Dataset
+- 170 images were meticulously annotated using bounding boxes in Label Studio.
+- Label conventions:
+  - **cana**: 0
+  - **entrenudo**: 1
+  - **nudo**: 2
+- Annotations were exported in YOLO format, with label mapping and dataset structure documented in [`dataset/notes.json`](dataset/notes.json).
+
+## Model Training Details
+### TensorFlow/Keras Training Highlights
+- **Data Augmentation:** Random rotations, zoom, brightness adjustment, horizontal/vertical flips, width/height shifts, and shearing to increase dataset diversity and prevent overfitting.
+- **Dropout Layer:** Dropout (0.5) to reduce overfitting.
+- **EarlyStopping:** Stops training if validation loss does not improve for 4 epochs, restoring the best weights.
+- **Model Architecture:** Multiple convolutional and pooling layers, followed by dense layers and sigmoid activation for binary classification.
+- **Visualization:** Training and validation accuracy/loss curves are generated and saved for performance analysis.
+- All these strategies are implemented in [`backend/training_test-keras_over.py`](backend/training_test-keras_over.py).
+
+### YOLOv8 Training & Annotation Details
+- The YOLOv8 model was trained using the script [`backend/training_test-yolo_over.py`](backend/training_test-yolo_over.py), referencing the dataset YAML file and running for 50 epochs with an image size of 640x640.
+- This process generates a `runs` directory containing the best trained model (`best.pt`).
+- This careful annotation and training strategy significantly improved the model's ability to accurately detect and distinguish between sugarcane, nodes, and internodes in real-world images.
+
 ## Workflow: How to Use This Project
 1. **Download the datasets and models**
    - Go to the [Google Drive link](https://drive.google.com/drive/folders/1wNsAS7rWQrlNNPh1YeuvZwvKAeNMqyL-?usp=sharing).
