@@ -119,5 +119,3 @@ numpy
 **sugarcane-detection-ai**
 
 ---
-
-Ready! Now you can automatically detect sugarcane and analyze its features with deep learning.
